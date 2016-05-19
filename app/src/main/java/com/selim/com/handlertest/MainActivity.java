@@ -31,20 +31,27 @@ public class MainActivity extends AppCompatActivity {
                     progress.post(new Runnable() {
                         @Override
                         public void run() {
-                            text.setText("Updating");
+                            System.out.println("========================= "+progress.getProgress()+"  "+progress.getMax()+" ===========================");
+                            if(progress.getProgress() >= progress.getMax()-1) {
+                                text.setText("Done");
+                                progress.setVisibility(ProgressBar.GONE);
+                            }
+                            else
+                                text.setText("Updating");
                             progress.setProgress(value);
                         }
                     });
                 }
             }
         };
+
         new Thread(runnable).start();
     }
 
     // Simulating something timeconsuming
     private void doFakeWork() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
